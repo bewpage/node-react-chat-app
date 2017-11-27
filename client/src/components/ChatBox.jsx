@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
+import { receivedMessage } from '../api';
 import MessageList from "./MessageList";
 import PostMessageForm from "./PostMessageForm";
+import Header from "./Header";
 
 
 
@@ -9,45 +11,66 @@ class ChatBox extends Component {
     constructor(props){
         super(props);
         this.state = {
-            test: [],
-            messages: []
+            send: [],
+            received: []
         }
     };
 
+    componentDidMount(){
+       this.testReceivedMessage();
+    }
+
 
     appendChatMessage = (text) => {
-        let newMessage = {
-            id: new Date().getTime(),
-            timestamp: new Date().getTime(),
-            text
-        };
         this.setState({
-            messages:[...this.state.messages, newMessage]
+            send: [...this.state.send, text]
+        });
+    };
+
+    testReceivedMessage = () => {
+        receivedMessage(data => {
+            const { text, from, createdAt } = data;
+            let newReceived = {
+                from,
+                text,
+                createdAt
+            };
+            this.setState({
+                received: [...this.state.received, newReceived]
+            });
         });
     };
 
 
     render() {
-        console.log('test info', this.props.newTest);
         let classList = [
-            "sc-chat-window"
+            "sc-chat-window",
+            (this.props.isOpen ? "opened" : "closed")
         ];
         return (
             <div className={classList.join(' ')}>
-                <h4>Chat Box</h4>
+                <Header className=''
+                        // teamName={this.props.agentProfile.teamName}
+                        teamName={"Bartek"}
+                        // imageUrl={this.props.agentProfile.imageUrl}
+                        onClose={this.props.onClose}
+                />
                 <div>
-                    {
-                        this.props.newTest.map(data => {
-                            return(
-                                <div key={new Date().getTime()}>
-                                    <p><span>From</span>: {data.from}</p>
-                                    <p>Message: {data.text}</p>
-                                </div>
-                            )
-                        })
-                    }
+                    {/*{*/}
+                        {/*this.props.newTest.map(data => {*/}
+                            {/*return(*/}
+                                {/*<div key={new Date().getTime()}>*/}
+                                    {/*<p><span>From</span>: {data.from}</p>*/}
+                                    {/*<p>Message: {data.text}</p>*/}
+                                {/*</div>*/}
+                            {/*)*/}
+                        {/*})*/}
+                    {/*}*/}
                 </div>
-                <MessageList testMessage={this.state.test}  messages={this.state.messages}/>
+                <MessageList data={this.state}
+                             // send={this.state.send}
+                             // receivedMessage={this.state.received}
+                />
                 <PostMessageForm appendChatMessage={this.appendChatMessage}/>
             </div>
         );

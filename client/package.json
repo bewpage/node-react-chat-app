@@ -16,6 +16,8 @@
   "author": "bj",
   "license": "ISC",
   "dependencies": {
+    "emoji-js": "^3.4.0",
+    "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17",

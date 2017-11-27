@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 
-import MessageItem from './MessageItem';
+// import MessageItem from './MessageItem';
+import Message from './Messages'
 
 
 class MessageList extends Component {
+
+
+
     render() {
-        // console.log('MessageList', this.props.messages);
-        // console.log('test list', this.props.testMessage);
+        console.log('test sprawdzic co to jest props', this.props);
         return (
             <div className='sc-message-list'>
-                <h5>Message List</h5>
-                <ul key={1}>
-                    {this.props.messages.map(message => {
+                <ul>
+                    {this.props.data.received.map((message, i) => {
+                        console.log('test sprawdzic co to jest', message);
                         return(
-                            <MessageItem key={message.id} text={message.text} />)
+                            <Message key={i} message={message.text} from={message.from}/>
+                        )
                     })
                     }
                 </ul>
@@ -21,5 +25,8 @@ class MessageList extends Component {
         );
     }
 }
+
+
+
 
 export default MessageList;
