@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3001');
-// const socket = openSocket("https://bew-node-chat-app.herokuapp.com/");
+// const socket = openSocket('http://localhost:3001');
+const socket = openSocket("https://bew-node-chat-app.herokuapp.com/");
 
 
 socket.on('connect', function() {
